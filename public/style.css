@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.main{
+margin: 10% auto auto;
+text-align: center;
+color: #fafafa;
+font-family: 'Righteous', Arial, Helvetica, sans-serif;
+font-weight: bold;
+}
+
+#mainP{
+  font-style: italic;
+}
+
+html, body{
+  background: #a2d5f2;
+}
+
+.searchbtn {
+    background: black;
+    width: 10%;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.wrapper{
+    max-width: 550px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 15px;
+    display: block;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.wrapper .input {
+    width: 85%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.searchbtn .fas{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}
+
+.search {
+  margin-top: 20%;
+}
