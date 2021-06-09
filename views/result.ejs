@@ -8,11 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </head>
   <body>
+    <nav class="navbar">
+      <i class="fas fa-cocktail fa-2x" alt=""></i>
+      <a class="navbar-brand" href="./" > Easycocktails.com</a>
+    </nav>
+
   <div class="main-results">
-    <!-- Escribir un loop con todas las respuestas.-->
+          <%  for(i=0 ; i < names.length ; i++){ %>
+        <div class="drink">
+          <h2 class="drink-title"><%=names[i]%></h2>
+          <div class="drink-container">
+            <img class="drink-image" src=<%=imgs[i]%>>
+            <p class="drink-desc"><%=recipes[i]%> </p>
+<!--             <ul class="item">
+
+            </ul> -->
+          </div>
+        </div>
+    <% } %>
   </div>
+
+
     <script src="app.js">
     </script>
   </body>

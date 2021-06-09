@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const app = express();
 
 const https = require('https');
+const { resourceUsage } = require("process");
 
 
 app.use(express.static("public"));
@@ -30,31 +31,77 @@ app.post("/", function(req, res){
     const url = "https://thecocktaildb.com/api/json/v1/1/search.php?s="+ query;
 
     https.get(url,function(response){
-        console.log(response.statusCode);
-        var cocktailData = "";
-        
-     response.on("data", function(data){
-         cocktailData =+ data;
+      console.log(response.statusCode);
+      const chunks = [];
+      const drinkNames = [];
+      const drinkImgs = [];
+      const drinkRecipe = [];
+      const drinkIngredients = [];
+
+     response.on("data", function(chunk){
+      chunks.push(chunk);
       });
 
-      response.on("end", ()=> {
-        try{
-        let results = JSON.parse(cocktailData);
-          console.log(results[0].strDrink);
-        } 
-        catch(error){
-          console.error(error.message);
+    response.on("end", function(){
+      const data = Buffer.concat(chunks);
+      var results = JSON.parse(data);
+
+      if(results.drinks !== null){
+        console.log(results.drinks.length);
+        for (let i=0; results.drinks.length; i++){
+          try{
+            drinkNames.push(results.drinks[i].strDrink);
+            drinkImgs.push(results.drinks[i].strDrinkThumb);
+            drinkRecipe.push(results.drinks[i].strInstructions);            
+          }
+          catch (e) { 
+            console.log(drinkNames, drinkImgs, drinkRecipe);
+    
+          break;
+          }
+
+
         };
+        
+        res.render("result", { 
+          names: drinkNames,
+          imgs: drinkImgs,
+          recipes: drinkRecipe
         });
 
-        response.on("error", (error) => {
-          console.error(error.message)
-        })
-        res.send();
+      } else { 
+        res.render("fail");     
+
+
+       }
       });
+      
     });
-
-
+  });
+ 
     app.listen(3000, function(){
     console.log("Server runing on port 3000.");
 });
+
+
+
+/* Probably need to move everything into objects to add the ingredients. TBD
+
+function Cocktail(name, image, descr, ingredients){
+  this.name = name,
+  this.image = image;
+  this.description = descr,
+  this.ingredients = ingredients
+}
+
+var drink = new Cocktail (results.drinks[i].strDrink, 
+  results.drinks[i].strDrinkThumb,
+  results.drinks[i].strInstructions,
+  results.drinks[i].strInstructions,
+  for (i=1; i < 16; i++){
+    results.drinks[i].strIngredient
+  }
+  
+);
+
+drinks.push(drink) */
